@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Login } from './connexion/Login';
 import { UserDashboard } from './connexion/UserDashboard';
-import { AdminDashboard } from './connexion/AdminDashboard';
+import AdminDashboard  from './connexion/AdminDashboard';
 import { useEffect, useState } from 'react';
 import './App.css';
 
