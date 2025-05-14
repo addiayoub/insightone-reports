@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { authService } from '../services/auth';
 import InsightOneIntro from './InsightOneIntro';
 import { Eye, EyeOff } from 'lucide-react';
+import { useSettings } from '../settings/SettingsContext';
 
 export const Login = () => {
   const [formData, setFormData] = useState({ email: '', password: '' });
@@ -13,6 +14,13 @@ export const Login = () => {
   const [targetPath, setTargetPath] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+
+
+    const { settings } = useSettings();
+  const isDarkTheme = settings.theme === 'dark';
+    const logoLight = '/logo.jpg'; // Chemin vers votre logo light
+  const logoDark = '/D.png';   // Chemin vers votre logo dark
+  const currentLogo = isDarkTheme ? logoDark : logoLight;
 
   // Gestion du délai
   useEffect(() => {
@@ -74,7 +82,8 @@ export const Login = () => {
     <div className="login-container">
       <div className="content-wrapper">
         <div className="logo-container">
-          <img src="logo.jpg" alt="Logo" className="logo" />
+          <img                 src={currentLogo} // Utilisation du logo approprié
+ alt="Logo" className="logo" />
         </div>
         <div className="form-container">
           <div className="container">

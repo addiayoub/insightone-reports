@@ -1,9 +1,113 @@
+/* Base styles to ensure theme changes are applied properly */
+:root {
+  /* Default light theme values */
+  --bg-color: #ffffff;
+  --text-color: #000000;
+  --border-color: #e2e8f0;
+  --primary-color: #3b82f6;
+  --secondary-color: #64748b;
+  --success-color: #10b981;
+  --error-color: #ef4444;
+  --warning-color: #f59e0b;
+}
+
+/* Theme-specific variables */
+[data-theme="light"] {
+  --bg-color: #ffffff;
+  --text-color: #000000;
+  --border-color: #e2e8f0;
+  --bg-secondary: #f1f5f9;
+  --primary-hover: #2563eb;
+}
+
+[data-theme="dark"] {
+  --bg-color: #1a202c;
+  --text-color: #f7fafc;
+  --border-color: #2d3748;
+  --bg-secondary: #2d3748;
+  --primary-hover: #3b82f6;
+}
+
+/* Font size variables */
+[data-font-size="small"] {
+  --text-base: 0.875rem;
+  --text-lg: 1rem;
+  --text-xl: 1.125rem;
+  --text-2xl: 1.25rem;
+}
+
+[data-font-size="medium"] {
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+}
+
+[data-font-size="large"] {
+  --text-base: 1.125rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.5rem;
+  --text-2xl: 1.75rem;
+}
+
+/* Font family variables */
+[data-font-family="sans"] {
+  --font-family: ui-sans-serif, system-ui, sans-serif;
+}
+
+[data-font-family="serif"] {
+  --font-family: ui-serif, Georgia, serif;
+}
+
+[data-font-family="mono"] {
+  --font-family: ui-monospace, SFMono-Regular, monospace;
+}
+
+/* Global styles - these actually apply the variables */
+html {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: var(--font-family);
+  font-size: var(--text-base);
+  line-height: 1.5;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Apply theme to all content with proper containment */
+#root, .app, .min-h-screen {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: var(--font-family);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Override specific gradient backgrounds to respect theme */
+.bg-gradient-to-br {
+  background: var(--bg-color);
+  /* If you want to maintain a subtle gradient effect while respecting theme: */
+  background-image: linear-gradient(to bottom right, 
+    color-mix(in srgb, var(--bg-color) 95%, var(--primary-color) 5%),
+    color-mix(in srgb, var(--bg-color) 95%, var(--secondary-color) 5%)
+  );
+}
+
+/* Animations */
 @keyframes fadeIn {
-    0%{
-      opacity: 0;
-    }
-    100%{
-      opacity: 1;
-    }
+  0% {
+    opacity: 0;
   }
-  body{background-color: white;}
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Add animation class */
+.fade-in {
+  animation: fadeIn 0.3s ease forwards;
+}

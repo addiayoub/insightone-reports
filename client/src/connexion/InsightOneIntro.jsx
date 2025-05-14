@@ -1,81 +1,86 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { useSettings } from '../settings/SettingsContext'; // Import the settings context
 
 const InsightOneIntro = () => {
+  // Use the settings context to get the current theme
+  const { settings } = useSettings();
+  const isDarkMode = settings.theme === 'dark';
+  
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 font-sans overflow-hidden">
+    <div className={`flex justify-center items-center min-h-screen ${isDarkMode ? 'bg-gradient-to-br from-gray-900 to-blue-900' : 'bg-gradient-to-br from-gray-50 to-blue-50'} font-sans overflow-hidden`}>
       <div className="text-center relative w-full">
         <div className="opacity-0 transform translate-y-5" style={{animation: 'fadeInUp 1.5s ease forwards'}}>
           <div className="w-full max-w-6xl mx-auto">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 350">
               {/* Document with charts */}
-              <g fill="#1d5b74" className="floating">
+              <g fill={isDarkMode ? "#ffffff" : "#1d5b74"} className="floating">
                 {/* Document Background */}
-                <rect id="document-rect" x="60" y="30" width="170" height="200" rx="15" ry="15" fill="none" stroke="#1d5b74" strokeWidth="8"/>
+                <rect id="document-rect" x="60" y="30" width="170" height="200" rx="15" ry="15" fill="none" stroke={isDarkMode ? "#ffffff" : "#1d5b74"} strokeWidth="8"/>
                 
                 {/* Pie Chart */}
                 <g id="pie-chart" transform="translate(120, 110)">
-                  <path d="M0,0 L0,-30 A30,30 0 0,1 30,0 Z" fill="#1d5b74"/>
-                  <path d="M0,0 L30,0 A30,30 0 0,1 -18.5,24 Z" fill="#2e8baa"/>
-                  <path d="M0,0 L-18.5,24 A30,30 0 0,1 -28.5,-9 Z" fill="#5aafcf"/>
-                  <path d="M0,0 L-28.5,-9 A30,30 0 0,1 0,-30 Z" fill="#89c7de"/>
-                  <circle cx="0" cy="0" r="30" fill="none" stroke="#1d5b74" strokeWidth="3"/>
+                  <path d="M0,0 L0,-30 A30,30 0 0,1 30,0 Z" fill={isDarkMode ? "#ffffff" : "#1d5b74"}/>
+                  <path d="M0,0 L30,0 A30,30 0 0,1 -18.5,24 Z" fill={isDarkMode ? "#e1e1e1" : "#2e8baa"}/>
+                  <path d="M0,0 L-18.5,24 A30,30 0 0,1 -28.5,-9 Z" fill={isDarkMode ? "#cccccc" : "#5aafcf"}/>
+                  <path d="M0,0 L-28.5,-9 A30,30 0 0,1 0,-30 Z" fill={isDarkMode ? "#b3b3b3" : "#89c7de"}/>
+                  <circle cx="0" cy="0" r="30" fill="none" stroke={isDarkMode ? "#ffffff" : "#1d5b74"} strokeWidth="3"/>
                 </g>
                 
                 {/* Bar Charts */}
                 <g id="bar-charts">
-                  <rect x="170" y="125" width="8" height="30" rx="2" ry="2" fill="#1d5b74"/>
-                  <rect x="185" y="115" width="8" height="40" rx="2" ry="2" fill="#2e8baa"/>
-                  <rect x="200" y="135" width="8" height="20" rx="2" ry="2" fill="#5aafcf"/>
+                  <rect x="170" y="125" width="8" height="30" rx="2" ry="2" fill={isDarkMode ? "#ffffff" : "#1d5b74"}/>
+                  <rect x="185" y="115" width="8" height="40" rx="2" ry="2" fill={isDarkMode ? "#e1e1e1" : "#2e8baa"}/>
+                  <rect x="200" y="135" width="8" height="20" rx="2" ry="2" fill={isDarkMode ? "#cccccc" : "#5aafcf"}/>
                 </g>
                 
                 {/* Document Lines */}
                 <g id="document-lines">
-                  <rect x="90" y="170" width="110" height="8" rx="4" ry="4" fill="#1d5b74"/>
-                  <rect x="90" y="190" width="110" height="8" rx="4" ry="4" fill="#1d5b74"/>
-                  <rect x="90" y="210" width="80" height="8" rx="4" ry="4" fill="#1d5b74"/>
+                  <rect x="90" y="170" width="110" height="8" rx="4" ry="4" fill={isDarkMode ? "#ffffff" : "#1d5b74"}/>
+                  <rect x="90" y="190" width="110" height="8" rx="4" ry="4" fill={isDarkMode ? "#ffffff" : "#1d5b74"}/>
+                  <rect x="90" y="210" width="80" height="8" rx="4" ry="4" fill={isDarkMode ? "#ffffff" : "#1d5b74"}/>
                 </g>
                 
                 {/* Checkmark Circle */}
-                <circle id="checkmark-circle" cx="60" cy="210" r="40" fill="#1d5b74" className="pulse"/>
-                <path id="checkmark" d="M40,210 L55,225 L80,195" fill="none" stroke="white" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round"/>
+                <circle id="checkmark-circle" cx="60" cy="210" r="40" fill={isDarkMode ? "#ffffff" : "#1d5b74"} className="pulse"/>
+                <path id="checkmark" d="M40,210 L55,225 L80,195" fill="none" stroke={isDarkMode ? "#000000" : "white"} strokeWidth="8" strokeLinecap="round" strokeLinejoin="round"/>
               </g>
               
               {/* Text "InsightOne" */}
               <text id="logo-text" x="300" y="150" fontFamily="Montserrat" fontSize="80" fontWeight="700">InsightOne</text>
               
               {/* Tagline */}
-              <text id="tagline-text" x="300" y="200" fontFamily="Montserrat" fontSize="24" letterSpacing="1" fill="#555">EMPOWERING FINANCE WITH ADVANCED AI</text>
+              <text id="tagline-text" x="300" y="200" fontFamily="Montserrat" fontSize="24" letterSpacing="1" fill={isDarkMode ? "#ffffff" : "#555"}>EMPOWERING FINANCE WITH ADVANCED AI</text>
               
               {/* Powered by ID&A TECH */}
               <g id="powered-by" opacity="0" style={{animation: 'fadeInUp 1s ease forwards 4s'}}>
-                <text x="300" y="250" fontFamily="Montserrat" fontSize="16" fill="#888">POWERED BY</text>
+                <text x="300" y="250" fontFamily="Montserrat" fontSize="16" fill={isDarkMode ? "#ffffff" : "#888"}>POWERED BY</text>
                 <g className="tech-logo" transform="translate(420, 235)">
-                  <rect x="0" y="0" width="120" height="30" rx="15" fill="none" stroke="#1d5b74" strokeWidth="2" strokeDasharray="300" strokeDashoffset="300" style={{animation: 'drawBorder 1.5s ease-out forwards 4.2s'}}/>
+                  <rect x="0" y="0" width="120" height="30" rx="15" fill="none" stroke={isDarkMode ? "#ffffff" : "#1d5b74"} strokeWidth="2" strokeDasharray="300" strokeDashoffset="300" style={{animation: 'drawBorder 1.5s ease-out forwards 4.2s'}}/>
                   
                   {/* I - From Left */}
-                  <text x="15" y="20" fontFamily="Montserrat" fontSize="14" fontWeight="bold" fill="#1d5b74" opacity="0" style={{animation: 'slideFromLeft 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards 4.5s'}}>I</text>
+                  <text x="15" y="20" fontFamily="Montserrat" fontSize="14" fontWeight="bold" fill={isDarkMode ? "#ffffff" : "#1d5b74"} opacity="0" style={{animation: 'slideFromLeft 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards 4.5s'}}>I</text>
                   
                   {/* D - From Right */}
-                  <text x="20" y="20" fontFamily="Montserrat" fontSize="14" fontWeight="bold" fill="#1d5b74" opacity="0" style={{animation: 'slideFromRight 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards 4.6s'}}>D</text>
+                  <text x="20" y="20" fontFamily="Montserrat" fontSize="14" fontWeight="bold" fill={isDarkMode ? "#ffffff" : "#1d5b74"} opacity="0" style={{animation: 'slideFromRight 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards 4.6s'}}>D</text>
                   
                   {/* & - From Top */}
-                  <text x="33" y="20" fontFamily="Montserrat" fontSize="14" fontWeight="bold" fill="#2e8baa" opacity="0" style={{animation: 'slideFromTop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards 4.7s'}}>&</text>
+                  <text x="33" y="20" fontFamily="Montserrat" fontSize="14" fontWeight="bold" fill={isDarkMode ? "#ffffff" : "#2e8baa"} opacity="0" style={{animation: 'slideFromTop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards 4.7s'}}>&</text>
                   
                   {/* A - From Bottom */}
-                  <text x="45" y="20" fontFamily="Montserrat" fontSize="14" fontWeight="bold" fill="#1d5b74" opacity="0" style={{animation: 'slideFromBottom 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards 4.8s'}}>A</text>
+                  <text x="45" y="20" fontFamily="Montserrat" fontSize="14" fontWeight="bold" fill={isDarkMode ? "#ffffff" : "#1d5b74"} opacity="0" style={{animation: 'slideFromBottom 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards 4.8s'}}>A</text>
                   
                   {/* TECH - Each letter from different directions */}
-                  <text x="60" y="20" fontFamily="Montserrat" fontSize="14" fontWeight="bold" fill="#5aafcf" opacity="0" style={{animation: 'slideFromLeft 0.5s ease forwards 5s'}}>T</text>
-                  <text x="70" y="20" fontFamily="Montserrat" fontSize="14" fontWeight="bold" fill="#5aafcf" opacity="0" style={{animation: 'slideFromRight 0.5s ease forwards 5.1s'}}>E</text>
-                  <text x="80" y="20" fontFamily="Montserrat" fontSize="14" fontWeight="bold" fill="#5aafcf" opacity="0" style={{animation: 'slideFromTop 0.5s ease forwards 5.2s'}}>C</text>
-                  <text x="90" y="20" fontFamily="Montserrat" fontSize="14" fontWeight="bold" fill="#5aafcf" opacity="0" style={{animation: 'slideFromBottom 0.5s ease forwards 5.3s'}}>H</text>
+                  <text x="60" y="20" fontFamily="Montserrat" fontSize="14" fontWeight="bold" fill={isDarkMode ? "#ffffff" : "#5aafcf"} opacity="0" style={{animation: 'slideFromLeft 0.5s ease forwards 5s'}}>T</text>
+                  <text x="70" y="20" fontFamily="Montserrat" fontSize="14" fontWeight="bold" fill={isDarkMode ? "#ffffff" : "#5aafcf"} opacity="0" style={{animation: 'slideFromRight 0.5s ease forwards 5.1s'}}>E</text>
+                  <text x="80" y="20" fontFamily="Montserrat" fontSize="14" fontWeight="bold" fill={isDarkMode ? "#ffffff" : "#5aafcf"} opacity="0" style={{animation: 'slideFromTop 0.5s ease forwards 5.2s'}}>C</text>
+                  <text x="90" y="20" fontFamily="Montserrat" fontSize="14" fontWeight="bold" fill={isDarkMode ? "#ffffff" : "#5aafcf"} opacity="0" style={{animation: 'slideFromBottom 0.5s ease forwards 5.3s'}}>H</text>
                 </g>
               </g>
             </svg>
           </div>
         </div>
         <div className="h-1 w-0 bg-gradient-to-r from-transparent via-blue-800 to-transparent mx-auto mt-8 opacity-70" style={{animation: 'expandLine 1.2s ease forwards 2s'}}></div>
-        <div className="opacity-0 text-blue-800 text-3xl mt-8 font-light tracking-wide transform translate-y-5" style={{animation: 'fadeInUp 1.5s ease forwards 2.5s'}}>
+        <div className={`opacity-0 ${isDarkMode ? 'text-blue-300' : 'text-blue-800'} text-3xl mt-8 font-light tracking-wide transform translate-y-5`} style={{animation: 'fadeInUp 1.5s ease forwards 2.5s'}}>
           Solutions intelligentes pour la finance de demain
         </div>
       </div>
@@ -237,7 +242,7 @@ const InsightOneIntro = () => {
           font-size: 80px;
           font-weight: 700;
           fill: transparent;
-          stroke: #1d5b74;
+          stroke: ${isDarkMode ? '#ffffff' : '#1d5b74'};
           stroke-width: 2;
           stroke-dasharray: 1000;
           stroke-dashoffset: 1000;
@@ -253,7 +258,7 @@ const InsightOneIntro = () => {
         
         @keyframes fillText {
           to {
-            fill: #1d5b74;
+            fill: ${isDarkMode ? '#ffffff' : '#1d5b74'};
             stroke-width: 0;
           }
         }
