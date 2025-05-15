@@ -4,7 +4,7 @@
   --bg-color: #ffffff;
   --text-color: #000000;
   --border-color: #e2e8f0;
-  --primary-color: #3b82f6;
+  --primary-color: #2c4766;
   --secondary-color: #64748b;
   --success-color: #10b981;
   --error-color: #ef4444;
@@ -25,6 +25,7 @@
   --text-color: #f7fafc;
   --border-color: #2d3748;
   --bg-secondary: #2d3748;
+  --primary-color: white;
   --primary-hover: #3b82f6;
 }
 

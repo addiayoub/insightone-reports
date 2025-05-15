@@ -5,7 +5,7 @@ import {
   AlertOctagon, Heart, Leaf, Zap, BarChart2, ShoppingCart, BookOpen, Utensils, 
   Menu, Award, Lightbulb, House
 } from 'lucide-react';
-import { useSettings } from '../settings/SettingsContext'; // Importez useSettings
+import { useSettings } from '../settings/SettingsContext';
 
 const Sidebar = ({ selectedSection, onBackToMenu, onSectionSelect }) => {
   // Utilisez le hook useSettings pour accéder au thème actuel
@@ -51,6 +51,7 @@ const Sidebar = ({ selectedSection, onBackToMenu, onSectionSelect }) => {
   const headerTextClass = isDarkMode ? 'text-white' : 'text-gray-700';
   const buttonHoverClass = isDarkMode ? 'hover:bg-gray-600' : 'hover:bg-gray-100';
   const iconColor = isDarkMode ? 'text-gray-400' : 'text-gray-600';
+  const poweredByTextClass = isDarkMode ? 'text-gray-300' : 'text-gray-500';
   
   // Classes pour les éléments de menu
   const getMenuItemClasses = (isSelected) => {
@@ -70,7 +71,7 @@ const Sidebar = ({ selectedSection, onBackToMenu, onSectionSelect }) => {
       animate={{ x: 0 }}
       exit={{ x: -280 }}
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
-      className={`fixed h-[calc(100vh-80px)] w-64 ${sidebarBgClass} shadow-lg border-r ${sidebarBorderClass} z-10`}
+      className={`fixed h-[calc(100vh-80px)] w-64 ${sidebarBgClass} shadow-lg border-r ${sidebarBorderClass} z-10 flex flex-col`}
     >
       <div className={`p-4 border-b ${sidebarBorderClass}`}>
         <div className="flex items-center justify-between">
@@ -89,7 +90,7 @@ const Sidebar = ({ selectedSection, onBackToMenu, onSectionSelect }) => {
         </div>
       </div>
       
-      <nav className="mt-4 px-3 overflow-y-auto h-[calc(100vh-180px)]">
+      <nav className="mt-4 px-3 overflow-y-auto flex-grow">
         <ul className="space-y-1">
           {menuItems.map((item) => (
             <li key={item.id}>
@@ -112,6 +113,22 @@ const Sidebar = ({ selectedSection, onBackToMenu, onSectionSelect }) => {
           ))}
         </ul>
       </nav>
+
+      {/* Footer avec "Powered by" et logo */}
+      <div className={`mt-auto p-4 border-t ${sidebarBorderClass} flex items-center justify-center`}>
+        <div className="flex flex-col items-center space-y-2">
+          <p className={`text-xs font-medium ${poweredByTextClass}`}>Powered by</p>
+          <div className="h-8 w-24 flex items-center justify-center">
+            {/* Remplacez ceci par votre logo ou utilisez une image importée */}
+             <a href="https://idatech.ma/">    <img 
+                src="/ID&A TECH .png" // Utilisation du logo approprié
+                alt="Logo" 
+                className={` transition-filter duration-300`}
+              /></a>            
+            
+          </div>
+        </div>
+      </div>
     </motion.div>
   );
 };

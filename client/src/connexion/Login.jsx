@@ -3,7 +3,7 @@ import './Login.css';
 import { useNavigate } from 'react-router-dom';
 import { authService } from '../services/auth';
 import InsightOneIntro from './InsightOneIntro';
-import { Eye, EyeOff } from 'lucide-react';
+import { Eye, EyeOff, Key, LogIn, UserLock } from 'lucide-react';
 import { useSettings } from '../settings/SettingsContext';
 
 export const Login = () => {
@@ -75,21 +75,22 @@ export const Login = () => {
   };
 
   if (showIntro) {
-    return <InsightOneIntro />; // Le composant s'affichera pendant 5 secondes
+    return <InsightOneIntro />; 
   }
 
   return (
     <div className="login-container">
       <div className="content-wrapper">
         <div className="logo-container">
-          <img                 src={currentLogo} // Utilisation du logo approprié
+          <img                 src={currentLogo} 
  alt="Logo" className="logo" />
         </div>
         <div className="form-container">
           <div className="container">
             <div className="login-box">
-              <h2>Login</h2>
-              <form onSubmit={handleSubmit}>
+<h2>
+  <UserLock size={70}strokeWidth={1}  className="login-icon" /> 
+</h2>              <form onSubmit={handleSubmit}>
                 <div className="input-box">
                   <input
                     name="email"

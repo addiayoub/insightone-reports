@@ -296,3 +296,18 @@ h2 {
     background: #444;
   }
 }
+.login-icon {
+  color: var(--primary-color); /* ou la couleur de votre choix */
+  margin: 0 auto;
+  display: block;
+}
+
+/* Si vous voulez ajouter une animation subtile */
+.login-icon {
+  transition: transform 0.3s ease;
+}
+
+.login-icon:hover {
+  transform: scale(1.1);
+  cursor: pointer;
+}

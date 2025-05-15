@@ -89,7 +89,7 @@ const Header = ({ onBackToMenu, sidebarOpen, onLogout }) => {
           <div className="flex items-center space-x-3">
             <motion.button
               onClick={toggleSettings}
-              className="text-white bg-blue-500 hover:bg-blue-600 p-3 transition-colors duration-300 cursor-pointer rounded-full"
+              className="text-white bg-gray-500 hover:bg-gray-600 p-3 transition-colors duration-300 cursor-pointer rounded-full"
               whileHover={{ scale: 1.1, rotate: 15 }}
               whileTap={{ scale: 0.9 }}
             >
