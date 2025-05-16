@@ -44,7 +44,8 @@ const InsightOneIntro = () => {
                 <circle id="checkmark-circle" cx="60" cy="210" r="40" fill={isDarkMode ? "#ffffff" : "#1d5b74"} className="pulse"/>
                 <path id="checkmark" d="M40,210 L55,225 L80,195" fill="none" stroke={isDarkMode ? "#000000" : "white"} strokeWidth="8" strokeLinecap="round" strokeLinejoin="round"/>
               </g>
-              
+                              {/* <text x="400" y="40" id="tagline-text1" fontFamily="Montserrat" fontWeight="500" fontSize="50" fill={isDarkMode ? "#ffffff" : "#1d5b74"}>welcome in</text> */}
+
               {/* Text "InsightOne" */}
               <text id="logo-text" x="300" y="150" fontFamily="Montserrat" fontSize="80" fontWeight="700">InsightOne</text>
               
@@ -262,7 +263,10 @@ const InsightOneIntro = () => {
             stroke-width: 0;
           }
         }
-        
+         #tagline-text1 {
+          opacity: 0;
+          animation: fadeInSlideUp 1s ease forwards 1s;
+        }
         /* Tagline Animation */
         #tagline-text {
           opacity: 0;
