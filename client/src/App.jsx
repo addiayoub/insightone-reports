@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Login } from './connexion/Login';
-import { UserDashboard } from './connexion/UserDashboard';
+import  UserDashboard  from './connexion/UserDashboard';
 import AdminDashboard from './connexion/AdminDashboard';
 import { useEffect, useState, useRef } from 'react';
 import { SettingsProvider } from './settings/SettingsContext';
