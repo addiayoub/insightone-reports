@@ -1,15 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import { 
   BarChart, PieChart, LineChart, ScatterChart,
-    
   Gauge, Funnel, 
   CandlestickChart,
   GitGraph,
   RadarIcon,
   Fence,
   Network,
-
-
+  Check
 } from "lucide-react";
 import ReactECharts from 'echarts-for-react';
 
@@ -116,7 +114,6 @@ const chartTypes = [
       }]
     }
   },
-
   { 
     id: 'treemap', 
     name: 'Treemap', 
@@ -204,22 +201,7 @@ const chartTypes = [
       }]
     }
   },
-  { 
-    id: 'graph', 
-    name: 'Réseau', 
-    icon: <GitGraph size={20} />,
-    description: 'Affiche des relations entre noeuds dans un graphe',
-    option: {
-      series: [{
-        type: 'graph',
-        data: [{
-          id: '0',
-          symbolSize: 50
-        }]
-      }]
-    }
-  },
-
+  
 ];
 
 const ChartPreview = ({ option }) => {
@@ -233,7 +215,8 @@ const ChartPreview = ({ option }) => {
     </div>
   );
 };
-const ChartTypeSelector = ({ onSelect }) => {
+
+const ChartTypeSelector = ({ onSelect, selectedChartType, onBack, onNext }) => {
   const [hoveredChart, setHoveredChart] = useState(null);
   const [hoverPosition, setHoverPosition] = useState({ x: 0, y: 0 });
 
@@ -250,32 +233,56 @@ const ChartTypeSelector = ({ onSelect }) => {
     setHoveredChart(null);
   };
 
+  const handleSelect = (chartId) => {
+    onSelect(chartId);
+  };
+
   return (
     <div className="relative">
-      <h3 className="text-lg font-medium mb-4">Sélectionnez un type de graphique</h3>
-      <div className="grid grid-cols-3 gap-4">
+      <div className="text-center mb-8">
+        <h3 className="text-lg font-medium text-gray-900">Sélectionner un type de graphique</h3>
+        <p className="mt-1 text-sm text-gray-500">
+          Choisissez le type de visualisation qui convient le mieux à vos données
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {chartTypes.map(chart => (
           <div 
             key={chart.id}
-            onClick={() => onSelect(chart.id)}
+            onClick={() => handleSelect(chart.id)}
             onMouseEnter={(e) => handleMouseEnter(chart, e)}
             onMouseLeave={handleMouseLeave}
-            className="p-4 border border-gray-200 rounded-lg cursor-pointer hover:border-blue-300 hover:shadow-md transition-all"
+            className={`relative p-4 border rounded-lg cursor-pointer transition-all ${
+              selectedChartType === chart.id 
+                ? 'border-blue-500 bg-blue-50 shadow' 
+                : 'border-gray-200 hover:border-blue-300 hover:shadow-md'
+            }`}
           >
             <div className="flex items-center space-x-3">
-              <div className="text-blue-500">{chart.icon}</div>
+              <div className={`text-${selectedChartType === chart.id ? 'blue-600' : 'blue-500'}`}>
+                {chart.icon}
+              </div>
               <div>
                 <h4 className="font-medium">{chart.name}</h4>
                 <p className="text-sm text-gray-500">{chart.description}</p>
               </div>
             </div>
+            
+            {/* Indicateur de sélection */}
+            {selectedChartType === chart.id && (
+              <div className="absolute top-2 right-2 h-5 w-5 bg-blue-500 rounded-full flex items-center justify-center">
+                <Check size={12} className="text-white" />
+              </div>
+            )}
           </div>
         ))}
       </div>
 
+      {/* Aperçu flottant au survol */}
       {hoveredChart && (
         <div 
-          className="fixed z-50 bg-white p-4 rounded-lg shadow-xl border border-gray-200 animate-fadeIn"
+          className="fixed z-50 bg-white p-4 rounded-lg shadow-xl border border-gray-200"
           style={{
             left: `${hoverPosition.x}px`,
             top: `${hoverPosition.y}px`,
@@ -287,8 +294,41 @@ const ChartTypeSelector = ({ onSelect }) => {
           <ChartPreview option={hoveredChart.option} />
         </div>
       )}
+      
+      {/* Aperçu du graphique sélectionné */}
+      {selectedChartType && (
+        <div className="mt-8 p-4 bg-gray-50 rounded-md border border-gray-200">
+          <h4 className="font-medium text-gray-900 mb-3">Aperçu du graphique sélectionné</h4>
+          <div className="h-56 border border-gray-200 bg-white rounded-lg p-2">
+            <ChartPreview option={chartTypes.find(c => c.id === selectedChartType).option} />
+          </div>
+          
+          {/* Boutons de navigation */}
+          <div className="flex justify-between mt-6">
+            <button
+              onClick={onBack}
+              className="px-4 py-2 rounded-md flex items-center space-x-2 text-gray-600 hover:bg-gray-100"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-chevron-left">
+                <path d="m15 18-6-6 6-6"/>
+              </svg>
+              <span>Précédent</span>
+            </button>
+            
+            <button
+              onClick={onNext}
+              className="px-4 py-2 rounded-md flex items-center space-x-2 bg-blue-500 text-white hover:bg-blue-600"
+            >
+              <span>Terminer</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-check">
+                <path d="M20 6 9 17l-5-5"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
 
-export default ChartTypeSelector
+export default ChartTypeSelector;

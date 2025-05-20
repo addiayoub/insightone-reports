@@ -1,9 +1,0 @@
-/* Assurez-vous qu'aucun parent n'a overflow:hidden */
-.dashboard-container {
-  overflow: visible !important;
-}
-
-/* Correction du z-index pour tous les menus */
-[role="menu"], [role="listbox"] {
-  z-index: 9999 !important;
-}

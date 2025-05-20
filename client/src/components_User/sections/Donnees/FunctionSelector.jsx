@@ -70,16 +70,7 @@ const FunctionSelector = ({ functions, selectedFunction, onSelectFunction, onBac
         ))}
       </div>
       
-      {selectedFunction && (
-        <div className="mt-6 flex justify-end">
-          <button 
-            onClick={onNext}
-            className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
-          >
-            Terminer la configuration
-          </button>
-        </div>
-      )}
+     
     </div>
   );
 };

@@ -22,16 +22,7 @@ const DatabaseSelector = ({ databases, selectedDb, onSelectDb, onNext }) => {
           </div>
         ))}
       </div>
-      {selectedDb && (
-        <div className="mt-6 flex justify-end">
-          <button 
-            onClick={onNext}
-            className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
-          >
-            Suivant
-          </button>
-        </div>
-      )}
+     
     </div>
   );
 };

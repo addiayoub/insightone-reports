@@ -6,9 +6,6 @@
     AreaChart,
     ScatterChart,
     CircleAlert,
-    Pencil,
-    Trash2,
-    MoveHorizontal,
     Plus,
     XCircle
   } from "lucide-react";
