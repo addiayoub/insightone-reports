@@ -1,11 +1,74 @@
 // models/sqlModel.js
-const { connectSQL, sql } = require('../db/sql.config');
+const { connectSQL, getConfiguredServers, sql } = require('../db/sql.config');
 
 class SQLModel {
-  // Récupérer toutes les bases de données du serveur
-  static async getAllDatabases() {
+  // Récupérer la liste des serveurs configurés
+  static async getServers() {
     try {
-      const pool = await connectSQL();
+      const servers = getConfiguredServers();
+      return servers.map(server => ({ name: server }));
+    } catch (error) {
+      console.error('Erreur lors de la récupération des serveurs:', error);
+      throw error;
+    }
+  }
+static async executeFunction(databaseName, schemaName, functionName, parameters = [], serverName = null) {
+  try {
+    const pool = await connectSQL(serverName);
+    
+    // Utiliser la base de données spécifiée
+    await pool.request().query(`USE [${databaseName}]`);
+    
+    // Construire la requête dynamiquement avec les paramètres
+    let query = `SELECT * FROM [${schemaName}].[${functionName}](`;
+    
+    // Ajouter les paramètres avec leur valeur
+    const paramPlaceholders = [];
+    const request = pool.request();
+    
+    // Traiter chaque paramètre et l'ajouter à la requête
+    if (parameters && parameters.length > 0) {
+      parameters.forEach((param, index) => {
+        const paramName = `param${index}`;
+        paramPlaceholders.push(`@${paramName}`);
+        
+        // Ajouter le paramètre à la requête
+        request.input(paramName, param.value);
+      });
+      
+      query += paramPlaceholders.join(', ');
+    }
+    
+    query += ')';
+    
+    // Exécuter la requête
+    const result = await request.query(query);
+    
+    return {
+      success: true,
+      recordset: result.recordset,
+      rowsAffected: result.rowsAffected
+    };
+  } catch (error) {
+    console.error(`Erreur lors de l'exécution de la fonction ${functionName}:`, error);
+    throw error;
+  }
+}
+  // Se connecter à un serveur spécifique
+  static async connectToServer(serverName) {
+    try {
+      await connectSQL(serverName);
+      return { success: true, message: `Connecté au serveur ${serverName}` };
+    } catch (error) {
+      console.error(`Erreur lors de la connexion au serveur ${serverName}:`, error);
+      throw error;
+    }
+  }
+
+  // Récupérer toutes les bases de données du serveur actuellement connecté
+  static async getAllDatabases(serverName = null) {
+    try {
+      const pool = await connectSQL(serverName);
       const result = await pool.request()
         .query('SELECT name FROM sys.databases WHERE database_id > 4'); // Exclut les bases système
       
@@ -17,9 +80,9 @@ class SQLModel {
   }
 
   // Récupérer tous les schémas d'une base de données spécifique
-  static async getSchemas(databaseName) {
+  static async getSchemas(databaseName, serverName = null) {
     try {
-      const pool = await connectSQL();
+      const pool = await connectSQL(serverName);
       const result = await pool.request()
         .query(`USE [${databaseName}]; SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA;`);
       
@@ -31,9 +94,9 @@ class SQLModel {
   }
 
   // Récupérer toutes les fonctions d'un schéma spécifique
-  static async getFunctions(databaseName, schemaName) {
+  static async getFunctions(databaseName, schemaName, serverName = null) {
     try {
-      const pool = await connectSQL();
+      const pool = await connectSQL(serverName);
       const result = await pool.request()
         .query(`
           USE [${databaseName}];
@@ -56,9 +119,9 @@ class SQLModel {
   }
 
   // Récupérer les détails d'une fonction spécifique
-  static async getFunctionDetails(databaseName, schemaName, functionName) {
+  static async getFunctionDetails(databaseName, schemaName, functionName, serverName = null) {
     try {
-      const pool = await connectSQL();
+      const pool = await connectSQL(serverName);
       
       // Récupérer la définition de la fonction
       const definitionResult = await pool.request()

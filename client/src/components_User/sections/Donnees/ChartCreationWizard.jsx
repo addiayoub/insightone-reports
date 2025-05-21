@@ -4,8 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import DatabaseSelector from './DatabaseSelector';
 import SchemaSelector from './SchemaSelector';
 import FunctionSelector from './FunctionSelector';
-// Assurez-vous d'avoir installé echarts et echarts-for-react
-// npm install --save echarts echarts-for-react
+
 import ChartTypeSelector from './ChartTypeSelector';
 import ServerSelector from './ServerSelector'; // Nouveau composant
 
