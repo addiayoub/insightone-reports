@@ -4,17 +4,23 @@ const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
+const { connectSQL } = require('./db/sql.config');
 
 // Charger les variables d'environnement
 dotenv.config({ path: '.env' });
 
-// Connecter à la base de données
+// Connecter à MongoDB
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
 .then(() => console.log('MongoDB connecté'))
 .catch(err => console.log('Erreur de connexion MongoDB:', err));
+
+// Tester la connexion SQL Server au démarrage
+connectSQL()
+  .then(() => console.log('SQL Server connecté au démarrage'))
+  .catch(err => console.log('Erreur de connexion SQL Server au démarrage:', err));
 
 const app = express();
 
@@ -32,6 +38,7 @@ app.use(cookieParser());
 // Routes
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/users', require('./routes/userRoutes'));
+app.use('/api/sql', require('./routes/sqlRoutes')); // Nouvelles routes SQL
 
 // Gérer les routes non trouvées
 app.use('*', (req, res) => {
@@ -46,4 +53,3 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Serveur démarré sur le port ${PORT}`);
 });
-
